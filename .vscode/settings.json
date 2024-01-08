@@ -1,4 +1,11 @@
 {
     "makefile.makefilePath": "/home/aiden/Documents/Euphony/Builds/LinuxMakefile/Makefile",
-    "makefile.makeDirectory": "/home/aiden/Documents/Euphony/Builds/LinuxMakefile/"
+    "makefile.makeDirectory": "/home/aiden/Documents/Euphony/Builds/LinuxMakefile/",
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/home/aiden/Documents/Euphony/Builds/LinuxMakefile/build",
+            "binaryPath": "/home/aiden/Documents/Euphony/Builds/LinuxMakefile/build/Euphony",
+            "binaryArgs": []
+        }
+    ]
 }
