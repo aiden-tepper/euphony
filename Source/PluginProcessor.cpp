@@ -159,50 +159,51 @@ void EuphonyAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer, juce:
     }
 
     py::scoped_interpreter guard{}; // Start the interpreter
-    py::exec("import sys; sys.path.append('/home/aiden/Documents/Euphony/Source')");
-
-    py::module_ test_mod = py::module_::import("test_module");
+    py::exec("import sys; sys.path.append('/home/aiden/Documents/Euphony/Source/voice-leading-cmdline/bindings')");
+    
+    // py::exec("import sys; sys.path.append('/home/aiden/Documents/Euphony/Source')");
+    // py::module_ test_mod = py::module_::import("test_module");
     // py::object result = test_mod.attr("generate_helloworld")();
     // std::string result_str = py::str(result);
     // std::cout << result_str << std::endl;
 
-    py::object result = test_mod.attr("generate_list")();
-    py::list resultList = result.cast<py::list>();
+    // py::object result = test_mod.attr("generate_list")();
+    // py::list resultList = result.cast<py::list>();
 
     // Iterate through the Python list in C++
-    for (const auto &item : resultList)
+    // for (const auto &item : resultList)
+    // {
+    //     // Cast each item to a C++ string (assuming the list contains strings)
+    //     std::string itemStr = py::str(item);
+    //     std::cout << itemStr << std::endl;
+    // }
+
+    try
     {
-        // Cast each item to a C++ string (assuming the list contains strings)
-        std::string itemStr = py::str(item);
-        std::cout << itemStr << std::endl;
+        py::module_ bindings = py::module_::import("bindings");
+        py::object next_chords = bindings.attr("next_chords")("I", "C", "major");
+
+        py::list dropdownItems = next_chords.cast<py::list>();
+
+        // Assuming dropdownItems is a list of strings
+        for (const auto &item : dropdownItems)
+        {
+            std::string itemName = item.cast<std::string>();
+            // Add itemName to your dropdown menu
+        }
+
+        // int itemId = 1;
+        // for (const auto &item : dropdownItems)
+        // {
+        //     std::string itemName = item.cast<std::string>();
+        //     chordDropdown.addItem(itemName, itemId++);
+        // }
     }
-
-    // try
-    // {
-    //     py::object pyModule = py::module_::import("test_module");
-    //     py::object pyFunction = pyModule.attr("generate_list");
-
-    //     py::list dropdownItems = pyFunction().cast<py::list>();
-
-    //     // Assuming dropdownItems is a list of strings
-    //     for (const auto &item : dropdownItems)
-    //     {
-    //         std::string itemName = item.cast<std::string>();
-    //         // Add itemName to your dropdown menu
-    //     }
-
-    //     // int itemId = 1;
-    //     // for (const auto &item : dropdownItems)
-    //     // {
-    //     //     std::string itemName = item.cast<std::string>();
-    //     //     chordDropdown.addItem(itemName, itemId++);
-    //     // }
-    // }
-    // catch (const py::error_already_set &e)
-    // {
-    //     std::cerr << "Python error: " << e.what() << std::endl;
-    //     // Handle error
-    // }
+    catch (const py::error_already_set &e)
+    {
+        std::cerr << "Python error: " << e.what() << std::endl;
+        // Handle error
+    }
 }
 
 //==============================================================================
