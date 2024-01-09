@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="qsvxSq" name="Euphony" projectType="audioplug" useAppConfig="0"
-              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
+              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" displaySplashScreen="1"
+              headerPath="./pybind11/include">
   <MAINGROUP id="UleZnV" name="Euphony">
     <GROUP id="{BBDAEAFF-5A9B-3ACC-4C1C-E5D95574BEEB}" name="Source">
       <FILE id="qGsxJM" name="PluginProcessor.cpp" compile="1" resource="0"
@@ -32,8 +33,10 @@
   <EXPORTFORMATS>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="Euphony"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="Euphony"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="Euphony" headerPath="/home/aiden/Documents/Euphony/pybind11/include&#10;/usr/include/python3.10"
+                       extraLinkerFlags="-lpython3.10"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="Euphony" headerPath="pybind11/include/"
+                       extraLinkerFlags="-lpython3.10"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="../../JUCE/modules"/>
