@@ -63,6 +63,13 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
     progressionImageComponent.setImage(progressionImage);
     addAndMakeVisible(progressionImageComponent);
   }
+
+  // TESTING
+  for (const auto &item : audioProcessor.getArrayOfStrings())
+  {
+    std::string itemName = item;
+    std::cout << itemName << std::endl;
+  }
 }
 
 EuphonyAudioProcessorEditor::~EuphonyAudioProcessorEditor()

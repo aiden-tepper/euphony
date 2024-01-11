@@ -132,35 +132,9 @@ bool EuphonyAudioProcessor::isBusesLayoutSupported(const BusesLayout &layouts) c
 
 void EuphonyAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer, juce::MidiBuffer &midiMessages)
 {
-    juce::ScopedNoDenormals noDenormals;
-    auto totalNumInputChannels = getTotalNumInputChannels();
-    auto totalNumOutputChannels = getTotalNumOutputChannels();
-
-    // In case we have more outputs than inputs, this code clears any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    // This is here to avoid people getting screaming feedback
-    // when they first compile a plugin, but obviously you don't need to keep
-    // this code if your algorithm always overwrites all the output channels.
-    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-        buffer.clear(i, 0, buffer.getNumSamples());
-
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    // Make sure to reset the state if your inner loop is processing
-    // the samples and the outer loop is handling the channels.
-    // Alternatively, you can process the samples with the channels
-    // interleaved by keeping the same state.
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
-    {
-        auto *channelData = buffer.getWritePointer(channel);
-
-        // ..do something to the data...
-    }
-
     py::scoped_interpreter guard{}; // Start the interpreter
-    py::exec("import sys; sys.path.append('/home/aiden/Documents/Euphony/Source/voice-leading-cmdline/bindings')");
-    
+    py::exec("import sys; sys.path.append('/home/aiden/Documents/Euphony/Source/voice-leading-cmdline')");
+
     // py::exec("import sys; sys.path.append('/home/aiden/Documents/Euphony/Source')");
     // py::module_ test_mod = py::module_::import("test_module");
     // py::object result = test_mod.attr("generate_helloworld")();
@@ -189,15 +163,16 @@ void EuphonyAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer, juce:
         for (const auto &item : dropdownItems)
         {
             std::string itemName = item.cast<std::string>();
+            // std::cout << itemName << std::endl;
             // Add itemName to your dropdown menu
         }
 
-        // int itemId = 1;
-        // for (const auto &item : dropdownItems)
-        // {
-        //     std::string itemName = item.cast<std::string>();
-        //     chordDropdown.addItem(itemName, itemId++);
-        // }
+        int itemId = 1;
+        for (const auto &item : dropdownItems)
+        {
+            std::string itemName = item.cast<std::string>();
+            // chordDropdown.addItem(itemName, itemId++);
+        }
     }
     catch (const py::error_already_set &e)
     {
@@ -236,4 +211,15 @@ void EuphonyAudioProcessor::setStateInformation(const void *data, int sizeInByte
 juce::AudioProcessor *JUCE_CALLTYPE createPluginFilter()
 {
     return new EuphonyAudioProcessor();
+}
+
+//==============================================================================
+std::vector<std::string> EuphonyAudioProcessor::getArrayOfStrings()
+{
+    std::vector<std::string> strings;
+    strings.push_back("Hello");
+    strings.push_back("World");
+    strings.push_back("GitHub");
+    strings.push_back("Copilot");
+    return strings;
 }
