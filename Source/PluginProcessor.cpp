@@ -132,8 +132,6 @@ bool EuphonyAudioProcessor::isBusesLayoutSupported(const BusesLayout &layouts) c
 
 void EuphonyAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer, juce::MidiBuffer &midiMessages)
 {
-    py::scoped_interpreter guard{}; // Start the interpreter
-    py::exec("import sys; sys.path.append('/home/aiden/Documents/Euphony/Source/voice-leading-cmdline')");
 
     // py::exec("import sys; sys.path.append('/home/aiden/Documents/Euphony/Source')");
     // py::module_ test_mod = py::module_::import("test_module");
@@ -151,34 +149,6 @@ void EuphonyAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer, juce:
     //     std::string itemStr = py::str(item);
     //     std::cout << itemStr << std::endl;
     // }
-
-    try
-    {
-        py::module_ bindings = py::module_::import("bindings");
-        py::object next_chords = bindings.attr("next_chords")("I", "C", "major");
-
-        py::list dropdownItems = next_chords.cast<py::list>();
-
-        // Assuming dropdownItems is a list of strings
-        for (const auto &item : dropdownItems)
-        {
-            std::string itemName = item.cast<std::string>();
-            // std::cout << itemName << std::endl;
-            // Add itemName to your dropdown menu
-        }
-
-        int itemId = 1;
-        for (const auto &item : dropdownItems)
-        {
-            std::string itemName = item.cast<std::string>();
-            // chordDropdown.addItem(itemName, itemId++);
-        }
-    }
-    catch (const py::error_already_set &e)
-    {
-        std::cerr << "Python error: " << e.what() << std::endl;
-        // Handle error
-    }
 }
 
 //==============================================================================
@@ -214,12 +184,29 @@ juce::AudioProcessor *JUCE_CALLTYPE createPluginFilter()
 }
 
 //==============================================================================
-std::vector<std::string> EuphonyAudioProcessor::getArrayOfStrings()
+std::vector<std::string> EuphonyAudioProcessor::getNextChords(const std::string &curr, const std::string &key, const std::string &major_minor)
 {
-    std::vector<std::string> strings;
-    strings.push_back("Hello");
-    strings.push_back("World");
-    strings.push_back("GitHub");
-    strings.push_back("Copilot");
-    return strings;
+    py::scoped_interpreter guard{}; // Start the interpreter
+    py::exec("import sys; sys.path.append('/home/aiden/Documents/Euphony/Source/voice-leading-cmdline')");
+
+    try
+    {
+        py::module_ bindings = py::module_::import("bindings");
+        py::object next_chords = bindings.attr("next_chords")(curr, key, major_minor);
+
+        py::list dropdownItems = next_chords.cast<py::list>();
+        std::vector<std::string> dropdownItemsVector;
+
+        for (const auto &item : dropdownItems)
+        {
+            std::string itemStr = py::str(item);
+            dropdownItemsVector.push_back(itemStr);
+        }
+        return dropdownItemsVector;
+    }
+    catch (const py::error_already_set &e)
+    {
+        std::cerr << "Python error: " << e.what() << std::endl;
+        return {};
+    }
 }

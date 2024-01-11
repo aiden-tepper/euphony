@@ -54,7 +54,7 @@ public:
   void setStateInformation(const void *data, int sizeInBytes) override;
 
   //==============================================================================
-  std::vector<std::string> getArrayOfStrings();
+  std::vector<std::string> getNextChords(const std::string &curr, const std::string &key, const std::string &major_minor);
 
 private:
   //==============================================================================

@@ -30,8 +30,13 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
   addAndMakeVisible(playButton);
 
   // Dropdown Menus
-  chordDropdown.addItem("Chord 1", 1);
-  chordDropdown.addItem("Chord 2", 2);
+  int i = 1;
+  for (const auto &item : audioProcessor.getNextChords("I", "C", "major"))
+  {
+    std::string itemName = item;
+    chordDropdown.addItem(itemName, i++);
+    // std::cout << itemName << std::endl;
+  }
   addAndMakeVisible(chordDropdown);
 
   keyDropdown.addItem("Key 1", 1);
@@ -62,13 +67,6 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
   {
     progressionImageComponent.setImage(progressionImage);
     addAndMakeVisible(progressionImageComponent);
-  }
-
-  // TESTING
-  for (const auto &item : audioProcessor.getArrayOfStrings())
-  {
-    std::string itemName = item;
-    std::cout << itemName << std::endl;
   }
 }
 
