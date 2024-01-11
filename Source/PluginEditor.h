@@ -38,6 +38,8 @@ private:
   // Dropdown Menus
   juce::ComboBox chordDropdown;
   juce::ComboBox keyDropdown;
+  juce::ComboBox sharpFlatDropdown;
+  juce::ComboBox majorMinorDropdown;
 
   // Labels
   juce::Label titleLabel;

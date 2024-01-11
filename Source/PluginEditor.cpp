@@ -39,9 +39,23 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
   }
   addAndMakeVisible(chordDropdown);
 
-  keyDropdown.addItem("Key 1", 1);
-  keyDropdown.addItem("Key 2", 2);
+  keyDropdown.addItem("C", 1);
+  keyDropdown.addItem("D", 2);
+  keyDropdown.addItem("E", 3);
+  keyDropdown.addItem("F", 4);
+  keyDropdown.addItem("G", 5);
+  keyDropdown.addItem("A", 6);
+  keyDropdown.addItem("B", 7);
   addAndMakeVisible(keyDropdown);
+
+  sharpFlatDropdown.addItem(" ", 1);
+  sharpFlatDropdown.addItem("#", 2);
+  sharpFlatDropdown.addItem("b", 3);
+  addAndMakeVisible(sharpFlatDropdown);
+
+  majorMinorDropdown.addItem("Major", 1);
+  majorMinorDropdown.addItem("Minor", 2);
+  addAndMakeVisible(majorMinorDropdown);
 
   // Labels
   titleLabel.setText("Euphony", juce::dontSendNotification);
@@ -86,7 +100,7 @@ void EuphonyAudioProcessorEditor::resized()
   // General dimensions
   const int buttonWidth = 100;
   const int buttonHeight = 30;
-  const int dropdownWidth = 150;
+  const int dropdownWidth = 100;
   const int dropdownHeight = 30;
   const int labelHeight = 20;
   const int margin = 10;
@@ -113,9 +127,11 @@ void EuphonyAudioProcessorEditor::resized()
   // progressionLabel - Immediately above generateButton, left-justified horizontally
   progressionLabel.setBounds(margin, getHeight() - 2 * margin - buttonHeight - labelHeight, 200, labelHeight); // Adjust width as needed
 
-  // keyLabel and keyDropdown - Center-justified horizontally, top of the screen
-  keyLabel.setBounds(centerX - dropdownWidth / 2 - 100, margin, 100, labelHeight); // Adjust width as needed
-  keyDropdown.setBounds(centerX - dropdownWidth / 2, margin + labelHeight, dropdownWidth, dropdownHeight);
+  // keyLabel and associated dropdowns - Center-justified horizontally, top of the screen
+  keyLabel.setBounds(centerX - dropdownWidth / 2 - 132, margin + labelHeight, 100, labelHeight); // Adjust width as needed
+  keyDropdown.setBounds(centerX - (dropdownWidth-25) / 2 - 40, margin + labelHeight, dropdownWidth - 25, dropdownHeight);
+  sharpFlatDropdown.setBounds(centerX - (dropdownWidth-25) / 2 + 40, margin + labelHeight, dropdownWidth - 25, dropdownHeight);
+  majorMinorDropdown.setBounds(centerX - dropdownWidth / 2 + 132, margin + labelHeight, dropdownWidth, dropdownHeight);
 
   // resetButton - Top right
   resetButton.setBounds(getWidth() - margin - buttonWidth, margin, buttonWidth, buttonHeight);
