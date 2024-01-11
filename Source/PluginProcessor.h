@@ -54,7 +54,12 @@ public:
   void setStateInformation(const void *data, int sizeInBytes) override;
 
   //==============================================================================
-  std::vector<std::string> getNextChords(const std::string &curr, const std::string &key, const std::string &major_minor);
+  const std::vector<std::string> getNextChords(const std::string &curr, const std::string &key, const std::string &major_minor);
+  void generateProgression(const std::vector<std::string> &progression, const std::string &key, const std::string &major_minor);
+  void resetGUI();
+  void addChord(std::string chord);
+  void playProgression();
+
 
 private:
   //==============================================================================

@@ -17,17 +17,30 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
   setSize(1400, 1000);
 
   // Buttons
+  
+  //==============================================================================
+  /** You can assign a lambda to this callback object to have it called when the button is clicked. */
+  // std::function<void()> onClick;
+
   generateButton.setButtonText("Generate");
   addAndMakeVisible(generateButton);
+  // onClick -> generateProgression()
+  // sends chordList to python binding, generates and displays lilypond image, loads audio file (or maybe it should just be played on the spot?)
 
   resetButton.setButtonText("Reset");
   addAndMakeVisible(resetButton);
+  // onClick -> resetGUI()
+  // resets all fields -- is it possible to just restart/redraw the GUI?
 
   addButton.setButtonText("Add");
   addAndMakeVisible(addButton);
+  // onClick -> addChord()
+  // adds chord to chordList and appends to progressionLabel
 
   playButton.setButtonText("Play");
   addAndMakeVisible(playButton);
+  // onClick -> playProgression()
+  // triggers audio playback of voice leading
 
   // Dropdown Menus
   int i = 1;
@@ -56,6 +69,9 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
   majorMinorDropdown.addItem("Major", 1);
   majorMinorDropdown.addItem("Minor", 2);
   addAndMakeVisible(majorMinorDropdown);
+  /**
+   * upon any state changes in any of the above 3 dropdowns, reset the chordList and progressionLabel
+  */
 
   // Labels
   titleLabel.setText("Euphony", juce::dontSendNotification);
@@ -92,7 +108,7 @@ EuphonyAudioProcessorEditor::~EuphonyAudioProcessorEditor()
 void EuphonyAudioProcessorEditor::paint(juce::Graphics &g)
 {
   // fill the whole window white
-  g.fillAll(juce::Colours::black);
+  g.fillAll(juce::Colours::transparentBlack);
 }
 
 void EuphonyAudioProcessorEditor::resized()
@@ -129,8 +145,8 @@ void EuphonyAudioProcessorEditor::resized()
 
   // keyLabel and associated dropdowns - Center-justified horizontally, top of the screen
   keyLabel.setBounds(centerX - dropdownWidth / 2 - 132, margin + labelHeight, 100, labelHeight); // Adjust width as needed
-  keyDropdown.setBounds(centerX - (dropdownWidth-25) / 2 - 40, margin + labelHeight, dropdownWidth - 25, dropdownHeight);
-  sharpFlatDropdown.setBounds(centerX - (dropdownWidth-25) / 2 + 40, margin + labelHeight, dropdownWidth - 25, dropdownHeight);
+  keyDropdown.setBounds(centerX - (dropdownWidth - 25) / 2 - 40, margin + labelHeight, dropdownWidth - 25, dropdownHeight);
+  sharpFlatDropdown.setBounds(centerX - (dropdownWidth - 25) / 2 + 40, margin + labelHeight, dropdownWidth - 25, dropdownHeight);
   majorMinorDropdown.setBounds(centerX - dropdownWidth / 2 + 132, margin + labelHeight, dropdownWidth, dropdownHeight);
 
   // resetButton - Top right

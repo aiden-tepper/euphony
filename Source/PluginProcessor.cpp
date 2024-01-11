@@ -210,3 +210,53 @@ std::vector<std::string> EuphonyAudioProcessor::getNextChords(const std::string 
         return {};
     }
 }
+
+void EuphonyAudioProcessor::generateProgression(const std::vector<std::string> &progression, const std::string &key, const std::string &major_minor)
+{
+    py::scoped_interpreter guard{}; // Start the interpreter
+    py::exec("import sys; sys.path.append('/home/aiden/Documents/Euphony/Source/voice-leading-cmdline')");
+
+    try
+    {
+        py::module_ bindings = py::module_::import("bindings");
+        py::object generate_progression = bindings.attr("generate_progression")(progression, key, major_minor);
+
+        py::list progression = generate_progression.cast<py::list>();
+        // somehow save progression as a variable with a scope such that playProgression() below can access it
+
+        // load resources/notes.png into GUI
+    }
+    catch (const py::error_already_set &e)
+    {
+        std::cerr << "Python error: " << e.what() << std::endl;
+        return {};
+    }
+}
+
+void EuphonyAudioProcessor::resetGUI() {
+    // redraw GUI? reset all fields somehow?
+}
+
+void EuphonyAudioProcessor::addChord(std::string chord) {
+    // add chord to a chordList
+}
+
+void EuphonyAudioProcessor::playProgression()
+{
+    py::scoped_interpreter guard{}; // Start the interpreter
+    py::exec("import sys; sys.path.append('/home/aiden/Documents/Euphony/Source/voice-leading-cmdline')");
+
+    try
+    {
+        py::module_ bindings = py::module_::import("bindings");
+        py::object play_audio = bindings.attr("play_audio")(progression);
+
+        // call play_audio
+
+    }
+    catch (const py::error_already_set &e)
+    {
+        std::cerr << "Python error: " << e.what() << std::endl;
+        return {};
+    }
+}
