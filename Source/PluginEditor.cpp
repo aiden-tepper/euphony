@@ -34,6 +34,12 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
 
   addButton.setButtonText("Add");
   addAndMakeVisible(addButton);
+  addButton.onClick = [this]
+  {
+    audioProcessor.addChord(chordDropdown.getText().toStdString());
+    DBG(chordDropdown.getText().toStdString());
+    progressionLabel.setText(progressionLabel.getText() + chordDropdown.getText().toStdString() + " - ", juce::NotificationType::dontSendNotification);
+  };
   // onClick -> addChord()
   // adds chord to chordList and appends to progressionLabel
 
@@ -99,7 +105,7 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
   nextChordLabel.setText("Next Chord:", juce::dontSendNotification);
   addAndMakeVisible(nextChordLabel);
 
-  progressionLabel.setText("Dm G7 Cmaj7 ...", juce::dontSendNotification);
+  progressionLabel.setText("", juce::dontSendNotification);
   addAndMakeVisible(progressionLabel);
 
   keyLabel.setText("Key: ", juce::dontSendNotification);
