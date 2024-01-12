@@ -17,11 +17,6 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
   setSize(1400, 1000);
 
   // Buttons
-
-  //==============================================================================
-  /** You can assign a lambda to this callback object to have it called when the button is clicked. */
-  // std::function<void()> onClick;
-
   generateButton.setButtonText("Generate");
   addAndMakeVisible(generateButton);
   // onClick -> generateProgression()
@@ -29,6 +24,15 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
 
   resetButton.setButtonText("Reset");
   addAndMakeVisible(resetButton);
+  resetButton.onClick = [this]
+  {
+    audioProcessor.clearChords();
+    progressionLabel.setText("", juce::NotificationType::dontSendNotification);
+    keyDropdown.setSelectedId(1);
+    sharpFlatDropdown.setSelectedId(1);
+    majorMinorDropdown.setSelectedId(1);
+    chordDropdown.setSelectedId(0);
+  };
   // onClick -> resetGUI()
   // resets all fields -- is it possible to just restart/redraw the GUI?
 
@@ -69,6 +73,8 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
   keyDropdown.onChange = [this]
   {
     audioProcessor.prog.setKey(keyDropdown.getText()[0]);
+    audioProcessor.clearChords();
+    progressionLabel.setText("", juce::NotificationType::dontSendNotification);
     DBG(keyDropdown.getText()[0]);
   };
   keyDropdown.setSelectedId(1);
@@ -80,6 +86,8 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
   sharpFlatDropdown.onChange = [this]
   {
     audioProcessor.prog.setSharpFlat(sharpFlatDropdown.getText()[0]);
+    audioProcessor.clearChords();
+    progressionLabel.setText("", juce::NotificationType::dontSendNotification);
     DBG(sharpFlatDropdown.getText()[0]);
   };
   sharpFlatDropdown.setSelectedId(1);
@@ -90,6 +98,8 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
   majorMinorDropdown.onChange = [this]
   {
     audioProcessor.prog.setMajorMinor(majorMinorDropdown.getText().toStdString());
+    audioProcessor.clearChords();
+    progressionLabel.setText("", juce::NotificationType::dontSendNotification);
     DBG(majorMinorDropdown.getText().toStdString());
   };
   majorMinorDropdown.setSelectedId(1);
@@ -166,7 +176,7 @@ void EuphonyAudioProcessorEditor::resized()
   generateButton.setBounds(margin, getHeight() - margin - buttonHeight, buttonWidth, buttonHeight);
 
   // progressionLabel - Immediately above generateButton, left-justified horizontally
-  progressionLabel.setBounds(margin, getHeight() - 2 * margin - buttonHeight - labelHeight, 200, labelHeight); // Adjust width as needed
+  progressionLabel.setBounds(margin, getHeight() - 2 * margin - buttonHeight - labelHeight, 1200, labelHeight); // Adjust width as needed
 
   // keyLabel and associated dropdowns - Center-justified horizontally, top of the screen
   keyLabel.setBounds(centerX - dropdownWidth / 2 - 132, margin + labelHeight, 100, labelHeight); // Adjust width as needed
