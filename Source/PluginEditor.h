@@ -40,7 +40,7 @@ private:
   juce::ComboBox keyDropdown;
   juce::ComboBox sharpFlatDropdown;
   juce::ComboBox majorMinorDropdown;
-
+  
   // Labels
   juce::Label titleLabel;
   juce::Label nextChordLabel;

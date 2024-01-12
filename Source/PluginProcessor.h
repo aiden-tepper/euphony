@@ -59,9 +59,36 @@ public:
   void resetGUI();
   void addChord(std::string chord);
   void playProgression();
-
+  ProgressionManager prog;
 
 private:
   //==============================================================================
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(EuphonyAudioProcessor)
+};
+
+class ProgressionManager
+{
+public:
+  // Accessors
+  const std::vector<std::string> &getStrProgression() const { return strProgression; }
+  const std::vector<std::vector<int>> &getIntProgression() const { return intProgression; }
+  char getKey() const { return key; }
+  char getSharpFlat() const { return sharpFlat; }
+  const std::string &getMajorMinor() const { return majorMinor; }
+
+  // Mutators
+  void setKey(char newKey) { key = newKey; }
+  void setSharpFlat(char newSharpFlat) { sharpFlat = newSharpFlat; }
+  void setMajorMinor(std::string newMajorMinor) { majorMinor = newMajorMinor; }
+  void setIntProgression(const std::vector<std::vector<int>> &newIntProgression) { intProgression = newIntProgression; }
+
+  // Special function for strProgression
+  void addToStrProgression(const std::string &chord) { strProgression.push_back(chord); }
+
+private:
+  std::vector<std::string> strProgression;
+  std::vector<std::vector<int>> intProgression;
+  char key;
+  char sharpFlat;
+  std::string majorMinor;
 };

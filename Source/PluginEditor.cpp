@@ -17,7 +17,7 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
   setSize(1400, 1000);
 
   // Buttons
-  
+
   //==============================================================================
   /** You can assign a lambda to this callback object to have it called when the button is clicked. */
   // std::function<void()> onClick;
@@ -60,18 +60,28 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
   keyDropdown.addItem("A", 6);
   keyDropdown.addItem("B", 7);
   addAndMakeVisible(keyDropdown);
+  keyDropdown.onChange = [this]
+  { audioProcessor.prog.setKey(keyDropdown.getText()[0]); };
+  keyDropdown.setSelectedId(1);
 
   sharpFlatDropdown.addItem(" ", 1);
   sharpFlatDropdown.addItem("#", 2);
   sharpFlatDropdown.addItem("b", 3);
   addAndMakeVisible(sharpFlatDropdown);
+  sharpFlatDropdown.onChange = [this]
+  { audioProcessor.prog.setSharpFlat(sharpFlatDropdown.getText()[0]); };
+  sharpFlatDropdown.setSelectedId(1);
 
   majorMinorDropdown.addItem("Major", 1);
   majorMinorDropdown.addItem("Minor", 2);
   addAndMakeVisible(majorMinorDropdown);
+  majorMinorDropdown.onChange = [this]
+  { audioProcessor.prog.setMajorMinor(majorMinorDropdown.getText().toStdString()); };
+  majorMinorDropdown.setSelectedId(1);
+
   /**
    * upon any state changes in any of the above 3 dropdowns, reset the chordList and progressionLabel
-  */
+   */
 
   // Labels
   titleLabel.setText("Euphony", juce::dontSendNotification);

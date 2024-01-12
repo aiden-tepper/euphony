@@ -133,22 +133,7 @@ bool EuphonyAudioProcessor::isBusesLayoutSupported(const BusesLayout &layouts) c
 void EuphonyAudioProcessor::processBlock(juce::AudioBuffer<float> &buffer, juce::MidiBuffer &midiMessages)
 {
 
-    // py::exec("import sys; sys.path.append('/home/aiden/Documents/Euphony/Source')");
-    // py::module_ test_mod = py::module_::import("test_module");
-    // py::object result = test_mod.attr("generate_helloworld")();
-    // std::string result_str = py::str(result);
-    // std::cout << result_str << std::endl;
-
-    // py::object result = test_mod.attr("generate_list")();
-    // py::list resultList = result.cast<py::list>();
-
-    // Iterate through the Python list in C++
-    // for (const auto &item : resultList)
-    // {
-    //     // Cast each item to a C++ string (assuming the list contains strings)
-    //     std::string itemStr = py::str(item);
-    //     std::cout << itemStr << std::endl;
-    // }
+    // continually called
 }
 
 //==============================================================================
@@ -184,7 +169,7 @@ juce::AudioProcessor *JUCE_CALLTYPE createPluginFilter()
 }
 
 //==============================================================================
-std::vector<std::string> EuphonyAudioProcessor::getNextChords(const std::string &curr, const std::string &key, const std::string &major_minor)
+const std::vector<std::string> EuphonyAudioProcessor::getNextChords(const std::string &curr, const std::string &key, const std::string &major_minor)
 {
     py::scoped_interpreter guard{}; // Start the interpreter
     py::exec("import sys; sys.path.append('/home/aiden/Documents/Euphony/Source/voice-leading-cmdline')");
@@ -233,12 +218,14 @@ void EuphonyAudioProcessor::generateProgression(const std::vector<std::string> &
     }
 }
 
-void EuphonyAudioProcessor::resetGUI() {
+void EuphonyAudioProcessor::resetGUI()
+{
     // redraw GUI? reset all fields somehow?
 }
 
-void EuphonyAudioProcessor::addChord(std::string chord) {
-    // add chord to a chordList
+void EuphonyAudioProcessor::addChord(std::string chord)
+{
+    prog.addToStrProgression(chord);
 }
 
 void EuphonyAudioProcessor::playProgression()
@@ -252,7 +239,6 @@ void EuphonyAudioProcessor::playProgression()
         py::object play_audio = bindings.attr("play_audio")(progression);
 
         // call play_audio
-
     }
     catch (const py::error_already_set &e)
     {
