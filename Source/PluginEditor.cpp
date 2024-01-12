@@ -61,7 +61,10 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
   keyDropdown.addItem("B", 7);
   addAndMakeVisible(keyDropdown);
   keyDropdown.onChange = [this]
-  { audioProcessor.prog.setKey(keyDropdown.getText()[0]); };
+  {
+    audioProcessor.prog.setKey(keyDropdown.getText()[0]);
+    DBG(keyDropdown.getText()[0]);
+  };
   keyDropdown.setSelectedId(1);
 
   sharpFlatDropdown.addItem(" ", 1);
@@ -69,14 +72,20 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
   sharpFlatDropdown.addItem("b", 3);
   addAndMakeVisible(sharpFlatDropdown);
   sharpFlatDropdown.onChange = [this]
-  { audioProcessor.prog.setSharpFlat(sharpFlatDropdown.getText()[0]); };
+  {
+    audioProcessor.prog.setSharpFlat(sharpFlatDropdown.getText()[0]);
+    DBG(sharpFlatDropdown.getText()[0]);
+  };
   sharpFlatDropdown.setSelectedId(1);
 
   majorMinorDropdown.addItem("Major", 1);
   majorMinorDropdown.addItem("Minor", 2);
   addAndMakeVisible(majorMinorDropdown);
   majorMinorDropdown.onChange = [this]
-  { audioProcessor.prog.setMajorMinor(majorMinorDropdown.getText().toStdString()); };
+  {
+    audioProcessor.prog.setMajorMinor(majorMinorDropdown.getText().toStdString());
+    DBG(majorMinorDropdown.getText().toStdString());
+  };
   majorMinorDropdown.setSelectedId(1);
 
   /**

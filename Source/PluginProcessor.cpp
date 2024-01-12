@@ -214,7 +214,6 @@ void EuphonyAudioProcessor::generateProgression(const std::vector<std::string> &
     catch (const py::error_already_set &e)
     {
         std::cerr << "Python error: " << e.what() << std::endl;
-        return {};
     }
 }
 
@@ -222,6 +221,10 @@ void EuphonyAudioProcessor::resetGUI()
 {
     // redraw GUI? reset all fields somehow?
 }
+
+void EuphonyAudioProcessor::clearChords() {
+    prog.setStrProgression({});
+};
 
 void EuphonyAudioProcessor::addChord(std::string chord)
 {
@@ -236,13 +239,12 @@ void EuphonyAudioProcessor::playProgression()
     try
     {
         py::module_ bindings = py::module_::import("bindings");
-        py::object play_audio = bindings.attr("play_audio")(progression);
+        py::object play_audio = bindings.attr("play_audio")(prog.getIntProgression());
 
         // call play_audio
     }
     catch (const py::error_already_set &e)
     {
         std::cerr << "Python error: " << e.what() << std::endl;
-        return {};
     }
 }
