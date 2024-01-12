@@ -122,7 +122,7 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
   addAndMakeVisible(keyLabel);
 
   // Images
-  juce::File imageFile("Source/test_image.png");
+  juce::File imageFile("/home/aiden/Documents/Euphony/Source/resources/test_image.png");
   juce::Image progressionImage = juce::ImageFileFormat::loadFrom(imageFile);
   if (progressionImage.isNull())
   {
