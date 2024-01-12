@@ -205,29 +205,64 @@ void EuphonyAudioProcessor::generateProgression()
     {
         py::module_ bindings = py::module_::import("bindings");
 
-        DBG("a");
-
-        const py::list strProgression = py::cast(prog.getStrProgression());
-        // Freaking the fuck out
-
-        for (const auto &chord : prog.getStrProgression())
+        std::vector<std::string> progression = {"ii", "V", "I"};
+        py::list progression_pylist;
+        for (const auto &item : progression)
         {
-            std::cout << chord << std::endl;
+            progression_pylist.append(py::cast(item));
         }
 
-        DBG("b");
+        std::string key = "C";
+        std::string major_minor = "Major";
 
-        py::object generate_progression = bindings.attr("generate_progression")(strProgression, "C", "Major");
+        py::object result = bindings.attr("generate_progression")(progression_pylist, key, major_minor);
+        py::list strProgression = result.cast<py::list>();
 
-        DBG("c");
+        // convert to std::vector<std::vector<int>>
+        std::vector<std::vector<int>> intProgression;
+        for (const auto &item : strProgression)
+        {
+            std::string itemStr = py::str(item).cast<std::string>();
 
-        py::list progression = generate_progression.cast<py::list>();
+            // Remove brackets
+            itemStr.erase(std::remove(itemStr.begin(), itemStr.end(), '['), itemStr.end());
+            itemStr.erase(std::remove(itemStr.begin(), itemStr.end(), ']'), itemStr.end());
 
-        auto intProgression = progression.cast<std::vector<std::vector<int>>>();
+            // Replace commas with spaces
+            std::replace(itemStr.begin(), itemStr.end(), ',', ' ');
+
+            std::vector<int> innerVector;
+            std::istringstream ss(itemStr);
+
+            int number;
+            while (ss >> number)
+            {
+                innerVector.push_back(number);
+            }
+
+            if (innerVector.empty())
+            {
+                std::cout << "No integers parsed for item: " << itemStr << std::endl;
+            }
+            else
+            {
+                intProgression.push_back(innerVector);
+            }
+        }
 
         prog.setIntProgression(intProgression);
 
-        // load resources/notes.png into GUI
+        // print intProgression for debugging
+        for (const auto &innerVector : intProgression)
+        {
+            for (const auto &number : innerVector)
+            {
+                std::cout << number << " ";
+            }
+            std::cout << std::endl;
+        }
+
+        // TODO: load resources/notes.png into GUI
     }
     catch (const py::error_already_set &e)
     {
