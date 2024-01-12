@@ -196,7 +196,7 @@ const std::vector<std::string> EuphonyAudioProcessor::getNextChords(const std::s
     }
 }
 
-void EuphonyAudioProcessor::generateProgression(const std::vector<std::string> &progression, const std::string &key, const std::string &major_minor)
+void EuphonyAudioProcessor::generateProgression()
 {
     py::scoped_interpreter guard{}; // Start the interpreter
     py::exec("import sys; sys.path.append('/home/aiden/Documents/Euphony/Source/voice-leading-cmdline')");
@@ -204,10 +204,28 @@ void EuphonyAudioProcessor::generateProgression(const std::vector<std::string> &
     try
     {
         py::module_ bindings = py::module_::import("bindings");
-        py::object generate_progression = bindings.attr("generate_progression")(progression, key, major_minor);
+
+        DBG("a");
+
+        const py::list strProgression = py::cast(prog.getStrProgression());
+        // Freaking the fuck out
+
+        for (const auto &chord : prog.getStrProgression())
+        {
+            std::cout << chord << std::endl;
+        }
+
+        DBG("b");
+
+        py::object generate_progression = bindings.attr("generate_progression")(strProgression, "C", "Major");
+
+        DBG("c");
 
         py::list progression = generate_progression.cast<py::list>();
-        // somehow save progression as a variable with a scope such that playProgression() below can access it
+
+        auto intProgression = progression.cast<std::vector<std::vector<int>>>();
+
+        prog.setIntProgression(intProgression);
 
         // load resources/notes.png into GUI
     }
@@ -222,9 +240,10 @@ void EuphonyAudioProcessor::resetGUI()
     // redraw GUI? reset all fields somehow?
 }
 
-void EuphonyAudioProcessor::clearChords() {
+void EuphonyAudioProcessor::clearChords()
+{
     prog.setStrProgression({});
-};
+}
 
 void EuphonyAudioProcessor::addChord(std::string chord)
 {

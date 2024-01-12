@@ -83,7 +83,7 @@ public:
 
   //==============================================================================
   const std::vector<std::string> getNextChords(const std::string &curr, const std::string &key, const std::string &major_minor);
-  void generateProgression(const std::vector<std::string> &progression, const std::string &key, const std::string &major_minor);
+  void generateProgression();
   void resetGUI();
   void clearChords();
   void addChord(std::string chord);

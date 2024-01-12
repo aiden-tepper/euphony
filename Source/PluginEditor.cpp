@@ -19,6 +19,11 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
   // Buttons
   generateButton.setButtonText("Generate");
   addAndMakeVisible(generateButton);
+  generateButton.onClick = [this]
+  {
+    DBG("Generate button clicked.");
+    audioProcessor.generateProgression();
+  };
   // onClick -> generateProgression()
   // sends chordList to python binding, generates and displays lilypond image, loads audio file (or maybe it should just be played on the spot?)
 
