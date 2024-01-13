@@ -33,9 +33,9 @@
   <EXPORTFORMATS>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="Euphony" headerPath="/home/aiden/Documents/Euphony/pybind11/include&#10;/usr/include/python3.10"
+        <CONFIGURATION isDebug="1" name="Debug" targetName="Euphony" headerPath="/home/aiden/Documents/Euphony/pybind11/include&#10;/usr/include/python3.10&#10;/usr/include/cairo&#10;/usr/include/poppler/cpp"
                        extraLinkerFlags="-lpython3.10"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="Euphony" headerPath="pybind11/include/"
+        <CONFIGURATION isDebug="0" name="Release" targetName="Euphony" headerPath="/home/aiden/Documents/Euphony/pybind11/include&#10;/usr/include/python3.10&#10;/usr/include/cairo&#10;/usr/include/poppler/cpp"
                        extraLinkerFlags="-lpython3.10"/>
       </CONFIGURATIONS>
       <MODULEPATHS>

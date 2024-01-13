@@ -5,10 +5,10 @@ global = {
 }
 
 \parallelMusic voiceA,voiceB,voiceC,voiceD {
-e'''4 d''' |
-c'''4 b'' |
-g''4 g'' |
-c'4 g' |
+a''4 b'' c''' |
+f''4 g'' g'' |
+d''4 d'' e'' |
+d'4 g c'' |
 }
 
 \score {
