@@ -76,6 +76,10 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
 
   playButton.setButtonText("Play");
   addAndMakeVisible(playButton);
+  playButton.onClick = [this]
+  {
+    audioProcessor.playProgression();
+  };
   // onClick -> playProgression()
   // triggers audio playback of voice leading
 
