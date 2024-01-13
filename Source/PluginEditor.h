@@ -34,6 +34,7 @@ private:
   juce::TextButton resetButton;
   juce::TextButton addButton;
   juce::TextButton playButton;
+  juce::TextButton setKeyButton;
 
   // Dropdown Menus
   juce::ComboBox chordDropdown;

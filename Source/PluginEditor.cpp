@@ -34,10 +34,11 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
   {
     audioProcessor.clearChords();
     progressionLabel.setText("", juce::NotificationType::dontSendNotification);
-    keyDropdown.setSelectedId(1);
+    keyDropdown.setSelectedId(0);
     sharpFlatDropdown.setSelectedId(1);
-    majorMinorDropdown.setSelectedId(1);
-    chordDropdown.setSelectedId(0);
+    majorMinorDropdown.setSelectedId(0);
+    // chordDropdown.setSelectedId(0);
+    chordDropdown.clear(juce::NotificationType::dontSendNotification);
     juce::File imageFile("/home/aiden/Documents/Euphony/Source/resources/placeholder.png");
     juce::Image progressionImage = juce::ImageFileFormat::loadFrom(imageFile);
     if (progressionImage.isNull())
@@ -57,9 +58,18 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
   addAndMakeVisible(addButton);
   addButton.onClick = [this]
   {
-    audioProcessor.addChord(chordDropdown.getText().toStdString());
-    DBG(chordDropdown.getText().toStdString());
-    progressionLabel.setText(progressionLabel.getText() + chordDropdown.getText().toStdString() + " - ", juce::NotificationType::dontSendNotification);
+    std::string chord = chordDropdown.getText().toStdString();
+    audioProcessor.addChord(chord);
+    DBG(chord);
+    progressionLabel.setText(progressionLabel.getText() + chord + " - ", juce::NotificationType::dontSendNotification);
+    chordDropdown.clear(juce::NotificationType::dontSendNotification);
+    int i = 1;
+    for (const auto &item : audioProcessor.getNextChords(chord, std::string(1, audioProcessor.prog.getKey()), audioProcessor.prog.getMajorMinor()))
+    {
+      std::string itemName = item;
+      chordDropdown.addItem(itemName, i++);
+      // std::cout << itemName << std::endl;
+    }
   };
   // onClick -> addChord()
   // adds chord to chordList and appends to progressionLabel
@@ -69,14 +79,37 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
   // onClick -> playProgression()
   // triggers audio playback of voice leading
 
-  // Dropdown Menus
-  int i = 1;
-  for (const auto &item : audioProcessor.getNextChords("I", "C", "major"))
+  setKeyButton.setButtonText("Set");
+  addAndMakeVisible(setKeyButton);
+  setKeyButton.onClick = [this]
   {
-    std::string itemName = item;
-    chordDropdown.addItem(itemName, i++);
-    // std::cout << itemName << std::endl;
-  }
+    audioProcessor.prog.setKey(keyDropdown.getText()[0]);
+    audioProcessor.prog.setSharpFlat(sharpFlatDropdown.getText()[0]);
+    audioProcessor.prog.setMajorMinor(majorMinorDropdown.getText().toStdString());
+    audioProcessor.clearChords();
+    progressionLabel.setText("", juce::NotificationType::dontSendNotification);
+    DBG("SET KEY");
+    std::string chord;
+    if (strcmp(audioProcessor.prog.getMajorMinor().c_str(), "Major") == 0)
+    {
+      chord = "I";
+    }
+    else
+    {
+      chord = "i";
+    }
+    int i = 1;
+    for (const auto &item : audioProcessor.getNextChords(chord, std::string(1, audioProcessor.prog.getKey()), audioProcessor.prog.getMajorMinor()))
+    {
+      std::string itemName = item;
+      chordDropdown.addItem(itemName, i++);
+      // std::cout << itemName << std::endl;
+    }
+  };
+  // onClick -> setKey()
+  // sets key
+
+  // Dropdown Menus
   addAndMakeVisible(chordDropdown);
 
   keyDropdown.addItem("C", 1);
@@ -87,39 +120,39 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
   keyDropdown.addItem("A", 6);
   keyDropdown.addItem("B", 7);
   addAndMakeVisible(keyDropdown);
-  keyDropdown.onChange = [this]
-  {
-    audioProcessor.prog.setKey(keyDropdown.getText()[0]);
-    audioProcessor.clearChords();
-    progressionLabel.setText("", juce::NotificationType::dontSendNotification);
-    DBG(keyDropdown.getText()[0]);
-  };
-  keyDropdown.setSelectedId(1);
+  // keyDropdown.onChange = [this]
+  // {
+  //   audioProcessor.prog.setKey(keyDropdown.getText()[0]);
+  //   audioProcessor.clearChords();
+  //   progressionLabel.setText("", juce::NotificationType::dontSendNotification);
+  //   DBG(keyDropdown.getText()[0]);
+  // };
+  keyDropdown.setSelectedId(0);
 
   sharpFlatDropdown.addItem(" ", 1);
   sharpFlatDropdown.addItem("#", 2);
   sharpFlatDropdown.addItem("b", 3);
   addAndMakeVisible(sharpFlatDropdown);
-  sharpFlatDropdown.onChange = [this]
-  {
-    audioProcessor.prog.setSharpFlat(sharpFlatDropdown.getText()[0]);
-    audioProcessor.clearChords();
-    progressionLabel.setText("", juce::NotificationType::dontSendNotification);
-    DBG(sharpFlatDropdown.getText()[0]);
-  };
+  // sharpFlatDropdown.onChange = [this]
+  // {
+  //   audioProcessor.prog.setSharpFlat(sharpFlatDropdown.getText()[0]);
+  //   audioProcessor.clearChords();
+  //   progressionLabel.setText("", juce::NotificationType::dontSendNotification);
+  //   DBG(sharpFlatDropdown.getText()[0]);
+  // };
   sharpFlatDropdown.setSelectedId(1);
 
   majorMinorDropdown.addItem("Major", 1);
   majorMinorDropdown.addItem("Minor", 2);
   addAndMakeVisible(majorMinorDropdown);
-  majorMinorDropdown.onChange = [this]
-  {
-    audioProcessor.prog.setMajorMinor(majorMinorDropdown.getText().toStdString());
-    audioProcessor.clearChords();
-    progressionLabel.setText("", juce::NotificationType::dontSendNotification);
-    DBG(majorMinorDropdown.getText().toStdString());
-  };
-  majorMinorDropdown.setSelectedId(1);
+  // majorMinorDropdown.onChange = [this]
+  // {
+  //   audioProcessor.prog.setMajorMinor(majorMinorDropdown.getText().toStdString());
+  //   audioProcessor.clearChords();
+  //   progressionLabel.setText("", juce::NotificationType::dontSendNotification);
+  //   DBG(majorMinorDropdown.getText().toStdString());
+  // };
+  majorMinorDropdown.setSelectedId(0);
 
   /**
    * upon any state changes in any of the above 3 dropdowns, reset the chordList and progressionLabel
@@ -210,11 +243,12 @@ void EuphonyAudioProcessorEditor::resized()
   // progressionLabel - Immediately above generateButton, left-justified horizontally
   progressionLabel.setBounds(margin, getHeight() - 2 * margin - buttonHeight - labelHeight, 1200, labelHeight); // Adjust width as needed
 
-  // keyLabel and associated dropdowns - Center-justified horizontally, top of the screen
+  // keyLabel and associated dropdowns and button - Center-justified horizontally, top of the screen
   keyLabel.setBounds(centerX - dropdownWidth / 2 - 132, margin + labelHeight, 100, labelHeight); // Adjust width as needed
   keyDropdown.setBounds(centerX - (dropdownWidth - 25) / 2 - 40, margin + labelHeight, dropdownWidth - 25, dropdownHeight);
   sharpFlatDropdown.setBounds(centerX - (dropdownWidth - 25) / 2 + 40, margin + labelHeight, dropdownWidth - 25, dropdownHeight);
   majorMinorDropdown.setBounds(centerX - dropdownWidth / 2 + 132, margin + labelHeight, dropdownWidth, dropdownHeight);
+  setKeyButton.setBounds(centerX - dropdownWidth / 2 + 220, margin + labelHeight, 100, labelHeight);
 
   // resetButton - Top right
   resetButton.setBounds(getWidth() - margin - buttonWidth, margin, buttonWidth, buttonHeight);
