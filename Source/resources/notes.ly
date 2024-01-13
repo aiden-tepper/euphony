@@ -1,14 +1,14 @@
 global = {
-  \key c \Major
+  \key e \minor
   \time 4/4
   \version "2.22.1"
 }
 
 \parallelMusic voiceA,voiceB,voiceC,voiceD {
-aes''4 a'' a'' g'' |
-b'4 des'' d'' c'' |
-e'4 e' f' e' |
-e4 a d' c' |
+cis'''4 cis''' dis''' |
+gis''4 ais'' b'' |
+f''4 fis'' fis'' |
+cis'4 fis' b |
 }
 
 \score {

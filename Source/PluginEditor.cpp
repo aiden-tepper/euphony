@@ -94,7 +94,7 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
     progressionLabel.setText("", juce::NotificationType::dontSendNotification);
     DBG("SET KEY");
     std::string chord;
-    if (strcmp(audioProcessor.prog.getMajorMinor().c_str(), "Major") == 0)
+    if (strcmp(audioProcessor.prog.getMajorMinor().c_str(), "major") == 0)
     {
       chord = "I";
     }
@@ -146,8 +146,8 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
   // };
   sharpFlatDropdown.setSelectedId(1);
 
-  majorMinorDropdown.addItem("Major", 1);
-  majorMinorDropdown.addItem("Minor", 2);
+  majorMinorDropdown.addItem("major", 1);
+  majorMinorDropdown.addItem("minor", 2);
   addAndMakeVisible(majorMinorDropdown);
   // majorMinorDropdown.onChange = [this]
   // {

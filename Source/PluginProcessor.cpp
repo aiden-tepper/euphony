@@ -294,9 +294,20 @@ void EuphonyAudioProcessor::playProgression()
     try
     {
         py::module_ bindings = py::module_::import("bindings");
-        py::object play_audio = bindings.attr("play_audio")(prog.getIntProgression());
 
-        // call play_audio
+        std::vector<std::vector<int>> progression = prog.getIntProgression();
+        py::list progression_pylist;
+        for (const auto &item : progression)
+        {
+            py::list inner_list;
+            for (const auto &inner_item : item)
+            {
+                inner_list.append(inner_item);
+            }
+            progression_pylist.append(inner_list);
+        }
+
+        py::object play_audio = bindings.attr("play_audio")(&progression_pylist);
     }
     catch (const py::error_already_set &e)
     {
