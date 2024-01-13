@@ -23,6 +23,7 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
   {
     DBG("Generate button clicked.");
     audioProcessor.generateProgression();
+    updateNotation();
   };
   // onClick -> generateProgression()
   // sends chordList to python binding, generates and displays lilypond image, loads audio file (or maybe it should just be played on the spot?)
@@ -37,6 +38,17 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
     sharpFlatDropdown.setSelectedId(1);
     majorMinorDropdown.setSelectedId(1);
     chordDropdown.setSelectedId(0);
+    juce::File imageFile("/home/aiden/Documents/Euphony/Source/resources/placeholder.png");
+    juce::Image progressionImage = juce::ImageFileFormat::loadFrom(imageFile);
+    if (progressionImage.isNull())
+    {
+      DBG("Image failed to load.");
+    }
+    else
+    {
+      progressionImageComponent.setImage(progressionImage);
+      addAndMakeVisible(progressionImageComponent);
+    }
   };
   // onClick -> resetGUI()
   // resets all fields -- is it possible to just restart/redraw the GUI?
@@ -127,7 +139,22 @@ EuphonyAudioProcessorEditor::EuphonyAudioProcessorEditor(EuphonyAudioProcessor &
   addAndMakeVisible(keyLabel);
 
   // Images
-  juce::File imageFile("/home/aiden/Documents/Euphony/Source/resources/test_image.png");
+  juce::File imageFile("/home/aiden/Documents/Euphony/Source/resources/placeholder.png");
+  juce::Image progressionImage = juce::ImageFileFormat::loadFrom(imageFile);
+  if (progressionImage.isNull())
+  {
+    DBG("Image failed to load.");
+  }
+  else
+  {
+    progressionImageComponent.setImage(progressionImage);
+    addAndMakeVisible(progressionImageComponent);
+  }
+}
+
+void EuphonyAudioProcessorEditor::updateNotation()
+{
+  juce::File imageFile("/home/aiden/Documents/Euphony/Source/resources/output.preview.png");
   juce::Image progressionImage = juce::ImageFileFormat::loadFrom(imageFile);
   if (progressionImage.isNull())
   {

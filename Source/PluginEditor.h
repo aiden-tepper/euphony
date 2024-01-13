@@ -50,5 +50,8 @@ private:
   // Images
   juce::ImageComponent progressionImageComponent;
 
+  // Helpers
+  void updateNotation();
+
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(EuphonyAudioProcessorEditor)
 };

@@ -205,17 +205,18 @@ void EuphonyAudioProcessor::generateProgression()
     {
         py::module_ bindings = py::module_::import("bindings");
 
-        std::vector<std::string> progression = {"ii", "V", "I"};
+        std::vector<std::string> progression = prog.getStrProgression();
+        // std::vector<std::string> progression = {"ii", "V", "I"};
         py::list progression_pylist;
         for (const auto &item : progression)
         {
             progression_pylist.append(py::cast(item));
         }
 
-        std::string key = "C";
-        std::string major_minor = "Major";
+        std::string key(1, prog.getKey()); // Convert character to string
+        std::string major_minor = prog.getMajorMinor();
 
-        py::object result = bindings.attr("generate_progression")(progression_pylist, key, major_minor);
+        py::object result = bindings.attr("generate_progression")(&progression_pylist, key, major_minor);
         py::list strProgression = result.cast<py::list>();
 
         // convert to std::vector<std::vector<int>>
