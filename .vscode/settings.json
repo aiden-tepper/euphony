@@ -1,10 +1,10 @@
 {
-    "makefile.makefilePath": "/home/aiden/Documents/Euphony/Builds/LinuxMakefile/Makefile",
-    "makefile.makeDirectory": "/home/aiden/Documents/Euphony/Builds/LinuxMakefile/",
+    "makefile.makefilePath": "/home/aiden/Documents/euphony/Builds/LinuxMakefile/Makefile",
+    "makefile.makeDirectory": "/home/aiden/Documents/euphony/Builds/LinuxMakefile/",
     "makefile.launchConfigurations": [
         {
-            "cwd": "/home/aiden/Documents/Euphony/Builds/LinuxMakefile/build",
-            "binaryPath": "/home/aiden/Documents/Euphony/Builds/LinuxMakefile/build/Euphony",
+            "cwd": "/home/aiden/Documents/euphony/Builds/LinuxMakefile/build",
+            "binaryPath": "/home/aiden/Documents/euphony/Builds/LinuxMakefile/build/Euphony",
             "binaryArgs": []
         }
     ],
@@ -82,5 +82,8 @@
         "typeinfo": "cpp",
         "variant": "cpp",
         "valarray": "cpp"
-    }
+    },
+    "makefile.configurations": [
+
+    ]
 }

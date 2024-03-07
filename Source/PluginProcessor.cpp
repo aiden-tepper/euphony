@@ -172,7 +172,7 @@ juce::AudioProcessor *JUCE_CALLTYPE createPluginFilter()
 const std::vector<std::string> EuphonyAudioProcessor::getNextChords(const std::string &curr, const std::string &key, const std::string &major_minor)
 {
     py::scoped_interpreter guard{}; // Start the interpreter
-    py::exec("import sys; sys.path.append('/home/aiden/Documents/Euphony/Source/voice-leading-cmdline')");
+    py::exec("import sys; sys.path.append('/home/aiden/Documents/euphony/Source/voice-leading-cmdline')");
 
     try
     {
@@ -289,7 +289,7 @@ void EuphonyAudioProcessor::addChord(std::string chord)
 void EuphonyAudioProcessor::playProgression()
 {
     py::scoped_interpreter guard{}; // Start the interpreter
-    py::exec("import sys; sys.path.append('/home/aiden/Documents/Euphony/Source/voice-leading-cmdline')");
+    py::exec("import sys; sys.path.append('/home/aiden/Documents/euphony/Source/voice-leading-cmdline')");
 
     try
     {

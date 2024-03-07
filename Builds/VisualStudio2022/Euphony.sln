@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio Version 17
+
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Euphony - Standalone Plugin", "Euphony_StandalonePlugin.vcxproj", "{7A368C49-4EA9-FC83-7AB4-AD2CFC97C499}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B10810CE-58B2-7541-CFC4-416C4F7899CD} = {B10810CE-58B2-7541-CFC4-416C4F7899CD}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Euphony - VST3", "Euphony_VST3.vcxproj", "{45520080-8CB6-7C8C-02BE-9E05ABB57979}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B10810CE-58B2-7541-CFC4-416C4F7899CD} = {B10810CE-58B2-7541-CFC4-416C4F7899CD}
+		{24950F3E-B319-F655-ECC5-C3EC5E70D2DA} = {24950F3E-B319-F655-ECC5-C3EC5E70D2DA}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Euphony - Shared Code", "Euphony_SharedCode.vcxproj", "{B10810CE-58B2-7541-CFC4-416C4F7899CD}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Euphony - VST3 Manifest Helper", "Euphony_VST3ManifestHelper.vcxproj", "{24950F3E-B319-F655-ECC5-C3EC5E70D2DA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{45520080-8CB6-7C8C-02BE-9E05ABB57979}.Debug|x64.ActiveCfg = Debug|x64
+		{45520080-8CB6-7C8C-02BE-9E05ABB57979}.Debug|x64.Build.0 = Debug|x64
+		{45520080-8CB6-7C8C-02BE-9E05ABB57979}.Release|x64.ActiveCfg = Release|x64
+		{45520080-8CB6-7C8C-02BE-9E05ABB57979}.Release|x64.Build.0 = Release|x64
+		{7A368C49-4EA9-FC83-7AB4-AD2CFC97C499}.Debug|x64.ActiveCfg = Debug|x64
+		{7A368C49-4EA9-FC83-7AB4-AD2CFC97C499}.Debug|x64.Build.0 = Debug|x64
+		{7A368C49-4EA9-FC83-7AB4-AD2CFC97C499}.Release|x64.ActiveCfg = Release|x64
+		{7A368C49-4EA9-FC83-7AB4-AD2CFC97C499}.Release|x64.Build.0 = Release|x64
+		{B10810CE-58B2-7541-CFC4-416C4F7899CD}.Debug|x64.ActiveCfg = Debug|x64
+		{B10810CE-58B2-7541-CFC4-416C4F7899CD}.Debug|x64.Build.0 = Debug|x64
+		{B10810CE-58B2-7541-CFC4-416C4F7899CD}.Release|x64.ActiveCfg = Release|x64
+		{B10810CE-58B2-7541-CFC4-416C4F7899CD}.Release|x64.Build.0 = Release|x64
+		{24950F3E-B319-F655-ECC5-C3EC5E70D2DA}.Debug|x64.ActiveCfg = Debug|x64
+		{24950F3E-B319-F655-ECC5-C3EC5E70D2DA}.Debug|x64.Build.0 = Debug|x64
+		{24950F3E-B319-F655-ECC5-C3EC5E70D2DA}.Release|x64.ActiveCfg = Release|x64
+		{24950F3E-B319-F655-ECC5-C3EC5E70D2DA}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
